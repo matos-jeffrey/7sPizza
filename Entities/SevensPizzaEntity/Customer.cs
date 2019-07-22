@@ -38,7 +38,7 @@ namespace SevensPizzaEntity
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         [NotMapped]
         public string ConfirmPassword { get; set; }
 

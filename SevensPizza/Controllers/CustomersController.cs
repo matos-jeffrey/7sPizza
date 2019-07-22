@@ -64,7 +64,7 @@ namespace SevensPizza.Controllers
                 customer.Email = Email;
                 customer.Password = Password;
 
-                return RedirectToAction("https://7spizzaapi.azurewebsites.net/api/Customers/Create", customer);
+                return RedirectToAction("https://7spizzaapi.azurewebsites.net/api/Customers", customer);
             }
             return View();
         }
