@@ -53,15 +53,20 @@ namespace SevensPizza.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustID,FirstName,LastName,Address,Email,Password")] Customer customer)
+        public async Task<IActionResult> Create(string FirstName, string LastName, string Address, string Email, string Password)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var customer = new Customer();
+                customer.FirstName = FirstName;
+                customer.LastName = LastName;
+                customer.Address = Address;
+                customer.Email = Email;
+                customer.Password = Password;
+
+                return RedirectToAction("https://7spizzaapi.azurewebsites.net/api/Customers/Create", customer);
             }
-            return View(customer);
+            return View();
         }
 
         // GET: Customers/Edit/5

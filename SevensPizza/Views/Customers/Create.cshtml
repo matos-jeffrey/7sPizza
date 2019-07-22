@@ -4,13 +4,14 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Create New Account</h2>
 
-<h4>Customer</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        @using (Html.BeginForm("Create", "Customers", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
@@ -40,12 +41,8 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
+        }
+        </div>
 </div>
 
 @section Scripts {
