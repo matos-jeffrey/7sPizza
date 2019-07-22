@@ -25,16 +25,22 @@ namespace SevensPizzaEntity
 
         [Required]
         [Display(Name = "Payment Type")]
-        public string PaymentType { get; set; }
+        public string PaymentType { get; set; } = "Cash";
 
         [Display(Name = "Delivery Address")]
         public string DeliveryAddress { get; set; }
 
         [Required]
-        public bool Delivery { get; set; }
+        public bool Delivery { get; set; } = false;
+
+        public bool Checkout { get; set; } = false;
 
         public int CustID { get; set; }
 
         public Customer Cust { get; set; }
+
+        public CreditCard Card { get; set; }
+
+        public List<Pizza> PizzaList { get; set; }
     }
 }

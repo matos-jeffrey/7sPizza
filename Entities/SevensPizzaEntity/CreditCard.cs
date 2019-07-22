@@ -18,6 +18,10 @@ namespace SevensPizzaEntity
         public string CardName { get; set; }
 
         [Required]
+        [Display(Name = "Card Number")]
+        public string CardNumber { get; set; }
+
+        [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Date of Expiration")]
         public DataType DOE { get; set; }

@@ -1,0 +1,97 @@
+﻿
+.border {
+    display: none;
+}
+
+.open {
+    display: block;
+    width: 1500px;
+}
+
+input[type="radio"] {
+    margin: 0 10px 0 10px;
+}
+
+button {
+    margin: 0 10px 0 10px;
+}
+
+h1.header, h1 label.control-label {
+    font-size: 70px;
+    font-weight: bold;
+}
+
+label.option {
+    font-size: 18px;
+    font-weight: 200;
+}
+
+label.control-label {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+input.formInput {
+    width: 10%;
+    font-size: 25px;
+    font-weight: 100;
+}
+
+.btn {
+    font-size: 25px;
+}
+
+input[type="radio"] {
+    height: 20px;
+    width: 20px;
+}
+
+input[type="checkbox"] {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    top: -50px;
+}
+
+div.topping {
+    width: 250px;
+    height: 133px;
+    display: inline-block;
+    margin-right: 50px;
+    margin-top: 20px;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+}
+
+.topping {
+    width: 300px;
+}
+
+.shoppingAmount {
+    width: 50px;
+}
+
+.total {
+    font-size: 30px;
+}
+
+#addressInput {
+    width: 1000px;
+}
+
+#creditCard {
+    width: 400px;
+}
+
+.tableHead {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.tableContext {
+    font-size: 15px;
+    padding-left: 10px;
+}

@@ -1,0 +1,121 @@
+﻿@model SevensPizzaEntity.Cart
+@{
+    ViewData["Title"] = "ShoppingCart";
+    var i = 0;
+}
+
+<h1 class="header">Shopping Cart</h1>
+<hr />
+
+<script>
+
+    function AmountChange(event) {
+        //get which row
+        var id = event.id;
+        //get the amount
+        var amount = event.value;
+        //get the pizza id for the api
+        var pizzaId = "#item" + id;
+        //get the price for change new value
+        var price = "#price" + id;
+        //get the total price for change new value
+        var totalPrice = "#totalPrice";
+        //get the total amount for change new value
+        var totalAmount = "#totalAmount";
+
+        //simulate the amount change;
+        var newPrice = amount * 300;
+        var newTotalPrice = newPrice + 200;
+        var newTotalAmount = 3 + 1;
+
+        //change the value in html
+        $(price).html(newPrice);
+        $(totalPrice).html(newTotalPrice);
+        $(totalAmount).html(newTotalAmount);
+
+
+    }
+
+</script>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaProperty.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaProperty.PizzaName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaProperty.Price)
+            </th>
+            <th>
+                Detail
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <input asp-for="OrderDetail.OrderID" type="hidden" />
+        @foreach (var item in Model.OrderDetail.PizzaList)
+        {
+            <input asp-for="@item.PizzaID" id="item@(i)" type="hidden" />
+            <tr>
+                <td>
+                    <input asp-for="@item.Quantity" min="1" max="50" id="@(i)" class="shoppingAmount" onchange="AmountChange(this)" onkeypress="IntOnly(event)" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PizzaName)
+                </td>
+                <td id="price@(i++)">
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>Size: </td>
+                            <td> @Html.DisplayFor(modelItem => item.Size)</td>
+                        </tr>
+                        <tr>
+                            <td>Style: </td>
+                            <td> @Html.DisplayFor(modelItem => item.CrustStyle)</td>
+                        </tr>
+                        <tr>
+                            <td>Sauce : </td>
+                            <td> @Html.DisplayFor(modelItem => item.Sauce)</td>
+                        </tr>
+                        <tr>
+                            <td>How much of Sauce : </td>
+                            <td> @Html.DisplayFor(modelItem => item.SauceAmount)</td>
+                        </tr>
+                        <tr>
+                            <td>How much of Cheese: </td>
+                            <td> @Html.DisplayFor(modelItem => item.CheeseAmount)</td>
+                        </tr>
+                        <tr>
+                            <td>Topping:</td>
+                            <td class="topping">@item.ToppingList()</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <a asp-action="#" asp-route-id="@item.PizzaID">Edit</a> |
+                    <a asp-action="#" asp-route-id="@item.PizzaID">Delete</a> |
+                </td>
+            </tr>
+        }
+        <tr>
+            <td class="total" id="totalAmount">
+                @Html.DisplayFor(modelItem => modelItem.OrderDetail.TotalPizza)
+            </td>
+            <td></td>
+            <td class="total" id="totalPrice">
+                @Html.DisplayFor(modelItem => modelItem.OrderDetail.Price)
+            </td>
+            <td></td>
+        </tr>
+    </tbody>
+
+</table>
+
+<button type="button" class=" btn btn-default">Checkout</button>

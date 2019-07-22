@@ -1,0 +1,18 @@
+﻿body {
+}
+.carouselImage{
+    float: left;
+    width: 45%;
+    
+}
+.carouselText {
+    float: right;
+    width: 55%;
+    color: orangered;
+    font-size: 60px;
+    font-weight: 900;
+    text-shadow: 2px 2px 2px #000000;
+    text-align: center;
+    padding-top: 125px;
+    padding-bottom: 125px;
+}
