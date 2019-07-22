@@ -60,7 +60,7 @@ namespace SevensPizza.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustID,FirstName,LastName,Address,Email,Password")] Customer customer)
+        public async Task<IActionResult> Create([Bind("CustID,FirstName,LastName,Address,Email,Password,ConfirmPassword")] Customer customer)
         {
             if (ModelState.IsValid)
             {
