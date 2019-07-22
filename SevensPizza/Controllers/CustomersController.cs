@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,7 +14,9 @@ namespace SevensPizza.Controllers
     public class CustomersController : Controller
     {
         private readonly SevensDBContext _context;
-
+        //private string _url = "https://7spizzaapi.azurewebsites.net/api/Customers";
+        HttpClient client = new HttpClient();
+        
         public CustomersController(SevensDBContext context)
         {
             _context = context;
@@ -21,6 +25,9 @@ namespace SevensPizza.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
+            //var apiUrl = "";
+            //var stringTask = client.GetStringAsync(apiUrl); //_url + apiUrl
+            //var res = stringTask.Result;
             return View(await _context.Customer.ToListAsync());
         }
 
@@ -57,7 +64,17 @@ namespace SevensPizza.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("https://7spizzaapi.azurewebsites.net/api/Customers", customer);
+                client.BaseAddress = new Uri("https://7spizzaapi.azurewebsites.net/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = await client.PostAsJsonAsync("api/Customers", customer);
+                response.EnsureSuccessStatusCode();
+
+                // return URI of the created resource.
+                return View(customer);
+
+                //RedirectToAction("https://7spizzaapi.azurewebsites.net/api/Customers", customer);
                 //_context.Add(customer);
                 //await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
