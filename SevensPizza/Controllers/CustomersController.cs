@@ -63,8 +63,8 @@ namespace SevensPizza.Controllers
         {
             if (ModelState.IsValid)
             {
-                //client.BaseAddress = new Uri("https://7spizzaapi.azurewebsites.net/");
-                client.BaseAddress = new Uri("http://localhost:64474/");
+                client.BaseAddress = new Uri("https://7spizzaapi.azurewebsites.net/");
+                //client.BaseAddress = new Uri("http://localhost:64474/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));
