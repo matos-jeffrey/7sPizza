@@ -30,6 +30,31 @@ namespace SevensPizza.Controllers
             return View(await _context.Customer.ToListAsync());
         }
 
+        public IActionResult Login()
+        {
+            ViewData["URL"] = "https://7spizzaapi.azurewebsites.net/";
+            return View();
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Login(string Email, string Password)
+        //{
+        //    if (Email == null || Password == null)
+        //    {
+        //        return View(); // RedirectToAction("ErrorPage", "MainMenu");
+        //    }
+
+        //    var customer = await _context.Customer
+        //        .FirstOrDefaultAsync(m => m.Email == Email && m.Password == Password);
+        //    if (customer == null)
+        //    {
+        //        return View(); // RedirectToAction("ErrorPage", "MainMenu");
+        //    }
+
+        //    return RedirectToAction("MainMenu", "MainMenu", new { customer.CustID });
+        //}
+
         // GET: Customers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
