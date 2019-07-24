@@ -4,14 +4,12 @@
     ViewData["Title"] = "New Account";
 }
 
-<h2>Create a New Account</h2>
+<h2>Create Your New Account!</h2>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("Create", "Customers", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
@@ -46,12 +44,12 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
-        }
-        </div>
+        </form>
+    </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <p>@ViewData["Response"]</p>
 </div>
 
 @section Scripts {
