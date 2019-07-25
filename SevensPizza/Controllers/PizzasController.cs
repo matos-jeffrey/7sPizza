@@ -7,51 +7,95 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SevensPizza.Models;
 using SevensPizzaEntity;
 
 namespace SevensPizza.Controllers
 {
     public class PizzasController : Controller
     {
-        private readonly SevensDBContext _context;
+
         HttpClient client = new HttpClient();
 
-        public PizzasController(SevensDBContext context)
+        private PizzaApi _api;
+        public PizzasController(PizzaApi api = null)
+
         {
-            _context = context;
+            if (_api == null)
+                _api = new PizzaApi();
+            else
+                _api = api;
         }
 
-        // GET: Pizzas
-        public async Task<IActionResult> Index()
-        {
-            var sevensDBContext = _context.Pizza.Include(p => p.order);
-            return View(await sevensDBContext.ToListAsync());
-        }
 
-        // GET: Pizzas/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var pizza = await _context.Pizza
-                .Include(p => p.order)
-                .FirstOrDefaultAsync(m => m.PizzaID == id);
-            if (pizza == null)
-            {
-                return NotFound();
-            }
-
-            return View(pizza);
-        }
 
         // GET: Pizzas/Create
         public IActionResult Create()
         {
-            ViewData["OrderID"] = new SelectList(_context.Order, "OrderID", "PaymentType");
+
             return View();
+        }
+
+        /*
+         * custom pizza page, fetch list of topping
+         */
+        //Pizza/Custom
+        public async Task<IActionResult> Custom(int? id)
+        {
+            var toppingList = await _api.GetTopping();
+            Pizza pizza = null;
+            if (id != null)
+            {
+                //handcode customer id =1;
+                var custId = 1;
+                //get the pizza from pizza table
+                pizza = await _api.GetPizza((int)id,custId);
+                //separate the string to list
+                var topping = pizza.Toppings.Split(",").ToList();
+                //change isSelected for selected topping
+                if (topping.Count > 1)
+                {
+                    //allow for pizza with topping
+                    foreach (var item in topping)
+                    {
+                        var result = toppingList.Find(x => x.Name == item);
+                        result.IsSelected = true;
+                    }
+                }
+
+                ViewData["type"] = "edit";
+            }
+            else
+            {
+                pizza = new Pizza();
+                ViewData["type"] = "create";
+            }
+
+            //separate to two list
+            var meatList = toppingList.Where(x => x.ToppingType == "Meat").ToList();
+            var veggiesList = toppingList.Where(x => x.ToppingType == "Veggies").ToList();
+
+            //add to the pizaa
+            pizza.Meats = meatList;
+            pizza.Veggies = veggiesList;
+
+            return View(pizza);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        // Post: Pizzas/Custom
+        public async Task<IActionResult> Custom(Pizza pizza)
+        {
+            //handcode customer id =1;
+            var custId = 1;
+            var success = await _api.PostPizza(custId,pizza);
+
+            if (!success)
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Menu", "Home");
         }
 
         // POST: Pizzas/Create
@@ -59,6 +103,7 @@ namespace SevensPizza.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Create([Bind("PizzaID,PizzaName,Quantity,Size,CrustStyle,Sauce,SauceAmount,CheeseAmount,Price,OrderID,Toppings")] Pizza pizza)
         {
             if (ModelState.IsValid)
@@ -71,106 +116,22 @@ namespace SevensPizza.Controllers
                     new MediaTypeWithQualityHeaderValue("application/json"));
                 //HttpResponseMessage response = await client.PostAsJsonAsync("api/Customers", customer);
                 var response = await client.PostAsync("api/Pizzas", new JsonContent(pizza));
-
-                ViewData["Response"] = response; //response.EnsureSuccessStatusCode();
-
-                // return URI of the created resource.
-                return View(pizza);
-
-                _context.Add(pizza);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["OrderID"] = new SelectList(_context.Order, "OrderID", "PaymentType", pizza.OrderID);
-            return View(pizza);
+            return View();
         }
-
-        // GET: Pizzas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        //Post: Pizzas/Update
+        public async Task<IActionResult> Update(int oldQuantity, Pizza pizza)
         {
-            if (id == null)
+            var success = await _api.UpdatePizza(oldQuantity, pizza);
+
+
+            if (!success)
             {
                 return NotFound();
             }
-
-            var pizza = await _context.Pizza.FindAsync(id);
-            if (pizza == null)
-            {
-                return NotFound();
-            }
-            ViewData["OrderID"] = new SelectList(_context.Order, "OrderID", "PaymentType", pizza.OrderID);
-            return View(pizza);
+                return RedirectToAction("ShoppingCart", "Orders");
+            
         }
 
-        // POST: Pizzas/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PizzaID,PizzaName,Quantity,Size,CrustStyle,Sauce,SauceAmount,CheeseAmount,Price,OrderID,Toppings")] Pizza pizza)
-        {
-            if (id != pizza.PizzaID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(pizza);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PizzaExists(pizza.PizzaID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["OrderID"] = new SelectList(_context.Order, "OrderID", "PaymentType", pizza.OrderID);
-            return View(pizza);
-        }
-
-        // GET: Pizzas/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var pizza = await _context.Pizza
-                .Include(p => p.order)
-                .FirstOrDefaultAsync(m => m.PizzaID == id);
-            if (pizza == null)
-            {
-                return NotFound();
-            }
-
-            return View(pizza);
-        }
-
-        // POST: Pizzas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var pizza = await _context.Pizza.FindAsync(id);
-            _context.Pizza.Remove(pizza);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool PizzaExists(int id)
-        {
-            return _context.Pizza.Any(e => e.PizzaID == id);
-        }
     }
 }

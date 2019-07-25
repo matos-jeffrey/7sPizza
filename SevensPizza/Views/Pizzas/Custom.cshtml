@@ -6,8 +6,12 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Custom">
+        <form asp-action=@((ViewBag.type == "create")?"Custom":"Update")>
+            <input type="hidden" name="oldQuantity" value="@Model.Quantity" />
             <input asp-for="PizzaID" type="hidden" />
+            <input asp-for="OrderID" type="hidden" />
+            <input asp-for="Price" type="hidden" />
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <!-- First page-->
             <div class="form-group border open ">
@@ -34,6 +38,7 @@
 
                 <!-- the Sauce of pizza-->
                 <label asp-for="Sauce" class="control-label"></label> <br />
+                <input type="radio" asp-for="Sauce" value="Tomato" /><label class="option">Tomato</label>
                 <input type="radio" asp-for="Sauce" value="BBQ" /><label class="option">BBQ</label>
                 <input type="radio" asp-for="Sauce" value="Alfrodo Sauce" /><label class="option">Alfrodo Sauce</label>
                 <input type="radio" asp-for="Sauce" value="Ranch" /><label class="option">Ranch</label>
@@ -63,17 +68,17 @@
                 <h1 class="header"><label asp-for="Meats" class="control-label"></label></h1>
                 @for (int i = 0; i < Model.Meats.Count; i++)
                 {
-                <input type="checkbox" asp-for="@Model.Meats[i].IsSelected" />
-                <input type="hidden" asp-for="@Model.Meats[i].Name" />
-                <input type="hidden" asp-for="@Model.Meats[i].Price" />
-                <div class="topping">
-                    <img src="~/images/topping/@(Model.Meats[i].Name).jpg" alt="@Model.Meats[i].Name" />
-                    <span class="product">@Model.Meats[i].Name  $@Model.Meats[i].Price</span>
-                </div>
+                    <input type="checkbox" asp-for="@Model.Meats[i].IsSelected" />
+                    <input type="hidden" asp-for="@Model.Meats[i].Name" />
+                    <input type="hidden" asp-for="@Model.Meats[i].Price" />
+                    <div class="topping">
+                        <img src="~/images/topping/@(Model.Meats[i].Name).jpg" alt="@Model.Meats[i].Name" />
+                        <span class="product">@Model.Meats[i].Name  $@Model.Meats[i].Price</span>
+                    </div>
 
                     if ((i + 1) % 3 == 0)
                     {
-                <br />
+                        <br />
                     }
 
                 }
@@ -89,16 +94,16 @@
                 <h1 class="header"><label asp-for="Veggies" class="control-label"></label></h1>
                 @for (int i = 0; i < Model.Veggies.Count; i++)
                 {
-                <input type="checkbox" asp-for="@Model.Veggies[i].IsSelected" />
-                <input type="hidden" asp-for="@Model.Veggies[i].Name" />
-                <input type="hidden" asp-for="@Model.Veggies[i].Price" />
-                <div class="topping">
-                    <img src="~/images/topping/@(Model.Veggies[i].Name).jpg" alt="@Model.Veggies[i].Name" />
-                    <span class="product">@Model.Veggies[i].Name  $@Model.Veggies[i].Price</span>
-                </div>
+                    <input type="checkbox" asp-for="@Model.Veggies[i].IsSelected" />
+                    <input type="hidden" asp-for="@Model.Veggies[i].Name" />
+                    <input type="hidden" asp-for="@Model.Veggies[i].Price" />
+                    <div class="topping">
+                        <img src="~/images/topping/@(Model.Veggies[i].Name).jpg" alt="@Model.Veggies[i].Name" />
+                        <span class="product">@Model.Veggies[i].Name  $@Model.Veggies[i].Price</span>
+                    </div>
                     if ((i + 1) % 3 == 0)
                     {
-                <br />
+                        <br />
                     }
 
                 }

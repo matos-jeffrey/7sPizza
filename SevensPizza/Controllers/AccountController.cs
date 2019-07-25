@@ -10,7 +10,6 @@ namespace SevensPizza.Controllers
     [Route("account")]
     public class AccountController : Controller
     {
-        
         public IActionResult Index()
         {
             return View();

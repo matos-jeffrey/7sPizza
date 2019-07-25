@@ -1,7 +1,6 @@
 ﻿@model SevensPizzaEntity.Cart
 @{
     ViewData["Title"] = "ShoppingCart";
-    var i = 0;
 }
 
 <h1 class="header">Shopping Cart</h1>
@@ -9,33 +8,77 @@
 
 <script>
 
-    function AmountChange(event) {
-        //get which row
+    function QuantityChange(event) {
+        //get the pizza id
         var id = event.id;
         //get the amount
-        var amount = event.value;
-        //get the pizza id for the api
-        var pizzaId = "#item" + id;
+        var quantity = parseInt(event.value);
+        //get orderId
+        var oId = parseInt($("#orderId").val());
         //get the price for change new value
         var price = "#price" + id;
         //get the total price for change new value
         var totalPrice = "#totalPrice";
         //get the total amount for change new value
         var totalAmount = "#totalAmount";
+        //ajax call
+        var url = "http://localhost:58548/api/Pizzas/Change";
 
-        //simulate the amount change;
-        var newPrice = amount * 300;
-        var newTotalPrice = newPrice + 200;
-        var newTotalAmount = 3 + 1;
+        /*PUT*/
+        $.ajax({
+            url: url,
+            type: "PUT",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({
+                pid: id,
+                oid: oId,
+                quantity: quantity
+            }),
+            async: true,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                $(price).html(parseFloat(Math.round(data.pizzaPrice* 100) / 100).toFixed(2));
+                $(totalPrice).html(data.orderTotalPrice);
+                $(totalAmount).html(data.orderTotalQuantity);
+
+            },
+            error: function (xhr) {
+                alert('error');
+            }
+        })
+
 
         //change the value in html
-        $(price).html(newPrice);
-        $(totalPrice).html(newTotalPrice);
-        $(totalAmount).html(newTotalAmount);
-
 
     }
 
+    function Delete(event) {
+
+        //get the pizza pid
+        var id = parseInt(event.target.id);
+        //get the pizza element and hidden it
+        var pizza = "#pizza" + id;
+        //ajax call
+        var url = "http://localhost:58548/api/Pizzas/" + id;
+        /*put*/
+        $.ajax({
+            url: url,
+            type: "DELETE",
+            /*      headers: {
+                      "Access-Control-Allow-Origin": "*",
+                  },*/
+            success: function () {
+                $(pizza).remove();
+
+            },
+            error: function (xhr) {
+                alert('error');
+            }
+        })
+
+    }
 </script>
 
 <table class="table">
@@ -56,53 +99,54 @@
         </tr>
     </thead>
     <tbody>
-        <input asp-for="OrderDetail.OrderID" type="hidden" />
+        <input asp-for="OrderDetail.OrderID" id="orderId" type="hidden" />
         @foreach (var item in Model.OrderDetail.PizzaList)
         {
-            <input asp-for="@item.PizzaID" id="item@(i)" type="hidden" />
-            <tr>
-                <td>
-                    <input asp-for="@item.Quantity" min="1" max="50" id="@(i)" class="shoppingAmount" onchange="AmountChange(this)" onkeypress="IntOnly(event)" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PizzaName)
-                </td>
-                <td id="price@(i++)">
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    <table>
-                        <tr>
-                            <td>Size: </td>
-                            <td> @Html.DisplayFor(modelItem => item.Size)</td>
-                        </tr>
-                        <tr>
-                            <td>Style: </td>
-                            <td> @Html.DisplayFor(modelItem => item.CrustStyle)</td>
-                        </tr>
-                        <tr>
-                            <td>Sauce : </td>
-                            <td> @Html.DisplayFor(modelItem => item.Sauce)</td>
-                        </tr>
-                        <tr>
-                            <td>How much of Sauce : </td>
-                            <td> @Html.DisplayFor(modelItem => item.SauceAmount)</td>
-                        </tr>
-                        <tr>
-                            <td>How much of Cheese: </td>
-                            <td> @Html.DisplayFor(modelItem => item.CheeseAmount)</td>
-                        </tr>
-                        <tr>
-                            <td>Topping:</td>
-                            <td class="topping">@item.ToppingList()</td>
-                        </tr>
-                    </table>
-                </td>
-                <td>
-                    <a asp-action="#" asp-route-id="@item.PizzaID">Edit</a> |
-                    <a asp-action="#" asp-route-id="@item.PizzaID">Delete</a> |
-                </td>
-            </tr>
+
+        <tr id="pizza@(item.PizzaID)">
+            <input asp-for="@item.PizzaID" id="item@(item.PizzaID)" type="hidden" />
+            <td>
+                <input asp-for="@item.Quantity" min="1" max="50" id="@(item.PizzaID)" class="shoppingAmount" onchange="QuantityChange(this)" onkeypress="IntOnly(event)" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PizzaName)
+            </td>
+            <td id="price@(item.PizzaID)">
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td>Size: </td>
+                        <td> @Html.DisplayFor(modelItem => item.Size)</td>
+                    </tr>
+                    <tr>
+                        <td>Style: </td>
+                        <td> @Html.DisplayFor(modelItem => item.CrustStyle)</td>
+                    </tr>
+                    <tr>
+                        <td>Sauce : </td>
+                        <td> @Html.DisplayFor(modelItem => item.Sauce)</td>
+                    </tr>
+                    <tr>
+                        <td>How much of Sauce : </td>
+                        <td> @Html.DisplayFor(modelItem => item.SauceAmount)</td>
+                    </tr>
+                    <tr>
+                        <td>How much of Cheese: </td>
+                        <td> @Html.DisplayFor(modelItem => item.CheeseAmount)</td>
+                    </tr>
+                    <tr>
+                        <td>Topping:</td>
+                        <td class="topping">@item.Toppings</td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <a asp-action="Custom" asp-controller="Pizzas" asp-route-id="@item.PizzaID">Edit</a> |
+                <a href="#" onclick="Delete(event)" id="@item.PizzaID">Delete</a>
+            </td>
+        </tr>
         }
         <tr>
             <td class="total" id="totalAmount">
@@ -118,4 +162,4 @@
 
 </table>
 
-<button type="button" class=" btn btn-default">Checkout</button>
+<button type="button" class="btn btn-default"><a asp-action="Checkout" asp-controller="Orders" asp-route-id="OrderDetail.OrderID">Chechout</a></button>

@@ -1,93 +1,89 @@
-﻿
+<div class="container menuHeading">
+    <center>
+        CHOOSE FROM ONE OF OUR SPECIALTY PIZZAS BELOW OR
+        <button><a asp-area="" asp-controller="Pizzas" asp-action="Custom">CREATE YOUR OWN</a></button>
+    </center>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <center><a href="#"><img src="~/images/sevens.png" height="200" width="200" /></center></a>
+            <div class="pizzaName"><center><strong>Seven's Pizza</strong></center></div>
+        </div>
+        <div class="col-sm pizzaDesc">
+            Our World Famous, award winning Seven's Pizza. Tomatoes, Green Peppers, Spinach, Steak and Sausage
+        </div>
+    </div>
+    <hr />
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <center><a href="#"><img src="~/images/veggie.png" height="200" width="200" /></center></a>
+            <div class="pizzaName"><center><strong>Veggie</strong></center></div>
+        </div>
+        <div class="col-sm pizzaDesc">
+            No meat whatsoever! Banana peppers, green peppers, onions, tomatoes, olives and mushrooms on a thin crust
+        </div>
+    </div>
+    <hr />
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <center><a href="#"><img src="~/images/mushroom.png" height="200" width="200" /></center></a>
+            <div class="pizzaName"><center><strong>Mushroom</strong></center></div>
+        </div>
+        <div class="col-sm pizzaDesc">
+            A savory combination of mushrooms and succulent steak with a light amount of cheese and extra sauce
+        </div>
+    </div>
+    <hr />
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <center><a href="#"><img src="~/images/bbqchicken.png" height="200" width="200" /></center></a>
+            <div class="pizzaName"><center><strong>BBQ Chicken</strong></center></div>
+        </div>
+        <div class="col-sm pizzaDesc">
+            Tender and juicy strips of grilled chicken covered in barbecue sauce and onions
+        </div>
+    </div>
+    <hr />
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <center><a href="#"><img src="~/images/hawaiian.png" height="200" width="200" /></center></a>
+            <div class="pizzaName"><center><strong>Hawaiian</strong></center></div>
+        </div>
+        <div class="col-sm pizzaDesc">
+            Savory combiantion of salami, bacon, pineapple and sweet red peppers on a thin crust
+        </div>
+    </div>
+    <hr />
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <center><a href="#"><img src="~/images/buffalochicken.png" height="200" width="200" /></center></a>
+            <div class="pizzaName"><center><strong>Buffalo Chicken</strong></center></div>
+        </div>
+        <div class="col-sm pizzaDesc">
+            Grilled Chicken, onions and banana pepeprs drizzled in our flavorful spicy buffalo sauce
+        </div>
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <center><a href="#"><img src="~/images/meatlover.png" height="200" width="200" /></center></a>
+            <div class="pizzaName"><center><strong>Meat Lover's</strong></center></div>
+        </div>
+        <div class="col-sm pizzaDesc">
+            All the meat you can imagine! Beef, pepperoni, bacon, salami, sausage, steak and meatballs with two layers of cheese
+        </div>
+    </div>
+    <hr />
+</div>
 
-    <link rel="stylesheet" href="~/css/Menu.css" />
-    
-    <div class="container menuHeading">
-        <center>CHOOSE FROM ONE OF OUR SPECIALTY PIZZAS BELOW OR 
-        <button>CREATE YOUR OWN</button>
-        </center>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <center><a href="#"><img src="~/images/sevens.png" height="200" width="200" /></center></a>
-                <div class="pizzaName"><center><strong>Seven's Pizza</strong></center></div>
-            </div>
-            <div class="col-sm pizzaDesc">
-                Our World Famous, award winning Seven's Pizza. Tomatoes, Green Peppers, Spinach, Steak and Sausage       
-            </div>
-        </div>
-        <hr />
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <center><a href="#"><img src="~/images/veggie.png" height="200" width="200" /></center></a>
-                <div class="pizzaName"><center><strong>Veggie</strong></center></div>
-            </div>
-            <div class="col-sm pizzaDesc">
-                No meat whatsoever! Banana peppers, green peppers, onions, tomatoes, olives and mushrooms on a thin crust
-            </div>
-        </div>
-        <hr />
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <center><a href="#"><img src="~/images/mushroom.png" height="200" width="200" /></center></a>
-                <div class="pizzaName"><center><strong>Mushroom</strong></center></div>
-            </div>
-            <div class="col-sm pizzaDesc">
-                A savory combination of mushrooms and succulent steak with a light amount of cheese and extra sauce
-            </div>
-        </div>
-        <hr />
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <center><a href="#"><img src="~/images/bbqchicken.png" height="200" width="200" /></center></a>
-                <div class="pizzaName"><center><strong>BBQ Chicken</strong></center></div>
-            </div>
-            <div class="col-sm pizzaDesc">
-                Tender and juicy strips of grilled chicken covered in barbecue sauce and onions
-            </div>
-        </div>
-        <hr />
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <center><a href="#"><img src="~/images/hawaiian.png" height="200" width="200" /></center></a>
-                <div class="pizzaName"><center><strong>Hawaiian</strong></center></div>
-            </div>
-            <div class="col-sm pizzaDesc">
-                Savory combiantion of salami, bacon, pineapple and sweet red peppers on a thin crust
-            </div>
-        </div>
-        <hr />
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <center><a href="#"><img src="~/images/buffalochicken.png" height="200" width="200" /></center></a>
-                <div class="pizzaName"><center><strong>Buffalo Chicken</strong></center></div>
-            </div>
-            <div class="col-sm pizzaDesc">
-                Grilled Chicken, onions and banana pepeprs drizzled in our flavorful spicy buffalo sauce
-            </div>
-        </div>
-        <hr />
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <a href="#"><img src="~/images/meatlover.png" height=50% width=50% /></a>
-                <div class="pizzaName"><center><strong>Meat Lover's</strong></center></div>
-            </div>
-            <div class="col-sm pizzaDesc">
-                All the meat you can imagine! Beef, pepperoni, bacon, salami, sausage, steak and meatballs with two layers of cheese
-            </div>
-        </div>
-        <hr />
-    </div>
