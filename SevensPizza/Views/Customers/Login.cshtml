@@ -1,0 +1,51 @@
+﻿@model SevensPizzaEntity.Customer
+
+<h4>Customer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-default" id="Login"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $('#Login').click(function (e) {
+        var url = @ViewData["URL"];
+        $.ajax({
+            contentType: 'application/json',
+            type: "GET",
+            url: url,
+            data: JSON.stringify({
+                "Email": Email,
+                "Password": Password,
+            }),
+            success: function (data, textStatus, jqXHR) {
+                $("#ResponseCheck").val(jqXHR.responseText);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#ResponseCheck").val(jqXHR.statusText);
+            }
+        });
+    });
+</script>
+
+<span id="ResponseCheck"></span>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
