@@ -1,0 +1,89 @@
+﻿@model IEnumerable<SevensPizzaEntity.Pizza>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CrustStyle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sauce)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SauceAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheeseAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Toppings)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PizzaName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CrustStyle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sauce)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SauceAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheeseAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.order.PaymentType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Toppings)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PizzaID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PizzaID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PizzaID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
