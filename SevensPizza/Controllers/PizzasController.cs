@@ -5,64 +5,99 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SevensPizza.Models;
 using SevensPizzaEntity;
 
 namespace SevensPizza.Controllers
 {
     public class PizzasController : Controller
     {
-        private readonly SevensDBContext _context;
-
-        public PizzasController(SevensDBContext context)
+        private PizzaApi _api;
+        public PizzasController(PizzaApi api = null)
         {
-            _context = context;
+            if (_api == null)
+                _api = new PizzaApi();
+            else
+                _api = api;
         }
+        /*
+         * custom pizza page, fetch list of topping
+         */
         //Pizza/Custom
         public async Task<IActionResult> Custom(int? id)
         {
-            List<Topping> list = new List<Topping>();
-            list.Add(new Topping() { Name = "Chicken", Price = 10, IsSelected = true });
-            list.Add(new Topping() { Name = "Beef", Price = 20 });
-            list.Add(new Topping() { Name = "Pepperoni", Price = 30 });
-            list.Add(new Topping() { Name = "Meatball", Price = 40 });
-            list.Add(new Topping() { Name = "Bacon", Price = 60 });
-            list.Add(new Topping() { Name = "Steak", Price = 70 });
-            list.Add(new Topping() { Name = "Sausage", Price = 80 });
-            list.Add(new Topping() { Name = "Anchovies", Price = 80 });
-            list.Add(new Topping() { Name = "Salami", Price = 80 });
-
-
-            List<Topping> viggies = new List<Topping>();
-            viggies.Add(new Topping() { Name = "Mushrooms", Price = 10 });
-            viggies.Add(new Topping() { Name = "Tomatoes", Price = 10, IsSelected = true });
-            viggies.Add(new Topping() { Name = "Pineapple", Price = 10 });
-            viggies.Add(new Topping() { Name = "Onions", Price = 10 });
-            viggies.Add(new Topping() { Name = "Black Olives", Price = 10 });
-            viggies.Add(new Topping() { Name = "Spinach", Price = 10 });
-            viggies.Add(new Topping() { Name = "Jalapeño Peppers", Price = 10 });
-            viggies.Add(new Topping() { Name = "Banana Peppers", Price = 10 });
-            viggies.Add(new Topping() { Name = "Green Peppers", Price = 10 });
-            viggies.Add(new Topping() { Name = "Red Peppers", Price = 10 });
-
-
-
-            Pizza order = new Pizza()
+            var toppingList = await _api.GetTopping();
+            Pizza pizza = null;
+            if (id != null)
             {
-                Meats = list,
-                Veggies = viggies
-            };
-            return View(order);
+                //handcode customer id =1;
+                var custId = 1;
+                //get the pizza from pizza table
+                pizza = await _api.GetPizza((int)id,custId);
+                //separate the string to list
+                var topping = pizza.Toppings.Split(",").ToList();
+                //change isSelected for selected topping
+                if (topping.Count > 1)
+                {
+                    //allow for pizza with topping
+                    foreach (var item in topping)
+                    {
+                        var result = toppingList.Find(x => x.Name == item);
+                        result.IsSelected = true;
+                    }
+                }
+
+                ViewData["type"] = "edit";
+            }
+            else
+            {
+                pizza = new Pizza();
+                ViewData["type"] = "create";
+            }
+
+            //separate to two list
+            var meatList = toppingList.Where(x => x.ToppingType == "Meat").ToList();
+            var veggiesList = toppingList.Where(x => x.ToppingType == "Veggies").ToList();
+
+            //add to the pizaa
+            pizza.Meats = meatList;
+            pizza.Veggies = veggiesList;
+
+            return View(pizza);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // GET: Orders/Custom
+        // Post: Pizzas/Custom
         public async Task<IActionResult> Custom(Pizza pizza)
         {
-            Console.WriteLine(pizza.Meats);
+            //handcode customer id =1;
+            var custId = 1;
+            var success = await _api.PostPizza(custId,pizza);
+
+            if (!success)
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Menu", "Home");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //Post: Pizzas/Update
+        public async Task<IActionResult> Update(int oldQuantity, Pizza pizza)
+        {
+            var success = await _api.UpdatePizza(oldQuantity, pizza);
 
 
-            return View();
+            if (!success)
+            {
+                return NotFound();
+            }
+
+
+
+            return RedirectToAction("ShoppingCart", "Orders");
         }
     }
 }
