@@ -37,6 +37,8 @@ namespace SevensPizzaEntity
 
         public int CustID { get; set; }
 
+        public int CardID { get; set; }
+
         public Customer Cust { get; set; }
 
         public CreditCard Card { get; set; }

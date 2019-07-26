@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SevensPizzaAPI.DAL;
 using SevensPizzaEntity;
 
 namespace SevensPizzaAPI
@@ -27,27 +28,33 @@ namespace SevensPizzaAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //need change
             services.AddDbContext<SevensDBContext>(options =>
             options.UseSqlServer(
                 Configuration.GetConnectionString("SevensConnection")));
 
+            services.AddScoped<IPizza, PizzaDAL>();
             //For Cors
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
                     builder =>
-                    builder.WithOrigins("https://localhost:44373", "https://localhost")
+                    builder.WithOrigins("http://localhost/",
+                        "https://7spizza.azurewebsites.net/", "http://localhost:55330/", "http://localhost:56758")
+
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
-
+            services.AddMvc().AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //app.UseDeveloperExceptionPage();
+            //app.UseDatabaseErrorPage();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -59,7 +66,7 @@ namespace SevensPizzaAPI
 
             app.UseCors("CorsPolicy");
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
