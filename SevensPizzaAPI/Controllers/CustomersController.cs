@@ -22,8 +22,8 @@ namespace SevensPizzaAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Customers
-        [HttpGet]
+       //GET: api/Customers
+       [HttpGet]
         public IEnumerable<Customer> GetCustomer()
         {
             return _context.Customer;
@@ -46,6 +46,26 @@ namespace SevensPizzaAPI.Controllers
             }
 
             return Ok(customer);
+        }
+
+        [HttpGet("{Email}/{Password}")]
+        public async Task<IActionResult> GetCustomer([FromRoute] string Email, [FromRoute] string Password)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var customer = await _context.Customer
+               .FirstOrDefaultAsync(m => m.Email == Email && m.Password == Password);
+            //var customer = await _context.Customer.FindAsync(id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(customer.CustID);
         }
 
         // PUT: api/Customers/5
@@ -85,7 +105,6 @@ namespace SevensPizzaAPI.Controllers
 
         // POST: api/Customers
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostCustomer([FromBody] Customer customer)
         {
             if (!ModelState.IsValid)
@@ -99,45 +118,26 @@ namespace SevensPizzaAPI.Controllers
             return CreatedAtAction("GetCustomer", new { id = customer.CustID }, customer);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(string email, string password)
-        {
-            if (email == null || password == null)
-            {
-                return RedirectToAction("ErrorPage", "MainMenu"); //Doesn't Exist
-            }
-
-            var customers = await _context.Customer
-                .FirstOrDefaultAsync(m => m.Email == email && m.Password == password);
-            if (customers == null)
-            {
-                return RedirectToAction("ErrorPage", "MainMenu"); //Doesn't Exist
-            }
-
-            return RedirectToAction("MainMenu", "MainMenu", new { customers.CustID }); //Doesn't Exist
-        }
-
         // DELETE: api/Customers/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteCustomer([FromRoute] int id)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCustomer([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    var customer = await _context.Customer.FindAsync(id);
-        //    if (customer == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var customer = await _context.Customer.FindAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
 
-        //    _context.Customer.Remove(customer);
-        //    await _context.SaveChangesAsync();
+            _context.Customer.Remove(customer);
+            await _context.SaveChangesAsync();
 
-        //    return Ok(customer);
-        //}
+            return Ok(customer);
+        }
 
         private bool CustomerExists(int id)
         {

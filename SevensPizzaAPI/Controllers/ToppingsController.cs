@@ -49,75 +49,75 @@ namespace SevensPizzaAPI.Controllers
         }
 
         // PUT: api/Toppings/5
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutTopping([FromRoute] int id, [FromBody] Topping topping)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutTopping([FromRoute] int id, [FromBody] Topping topping)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    if (id != topping.ToppingID)
-        //    {
-        //        return BadRequest();
-        //    }
+            if (id != topping.ToppingID)
+            {
+                return BadRequest();
+            }
 
-        //    _context.Entry(topping).State = EntityState.Modified;
+            _context.Entry(topping).State = EntityState.Modified;
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ToppingExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ToppingExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
         // POST: api/Toppings
-        //[HttpPost]
-        //public async Task<IActionResult> PostTopping([FromBody] Topping topping)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        [HttpPost]
+        public async Task<IActionResult> PostTopping([FromBody] Topping topping)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    _context.Topping.Add(topping);
-        //    await _context.SaveChangesAsync();
+            _context.Topping.Add(topping);
+            await _context.SaveChangesAsync();
 
-        //    return CreatedAtAction("GetTopping", new { id = topping.ToppingID }, topping);
-        //}
+            return CreatedAtAction("GetTopping", new { id = topping.ToppingID }, topping);
+        }
 
         // DELETE: api/Toppings/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteTopping([FromRoute] int id)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTopping([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    var topping = await _context.Topping.FindAsync(id);
-        //    if (topping == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var topping = await _context.Topping.FindAsync(id);
+            if (topping == null)
+            {
+                return NotFound();
+            }
 
-        //    _context.Topping.Remove(topping);
-        //    await _context.SaveChangesAsync();
+            _context.Topping.Remove(topping);
+            await _context.SaveChangesAsync();
 
-        //    return Ok(topping);
-        //}
+            return Ok(topping);
+        }
 
         private bool ToppingExists(int id)
         {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SevensPizzaAPI.DAL;
 using SevensPizzaEntity;
 
 namespace SevensPizzaAPI.Controllers
@@ -15,21 +16,23 @@ namespace SevensPizzaAPI.Controllers
     [EnableCors("CorsPolicy")]
     public class OrdersController : ControllerBase
     {
-        private readonly SevensDBContext _context;
+        private readonly IPizza DAL;
 
-        public OrdersController(SevensDBContext context)
+
+        public OrdersController(IPizza dal)
         {
-            _context = context;
+            DAL = dal;
         }
 
         // GET: api/Orders
         [HttpGet]
-        public IEnumerable<Order> GetOrder()
+        public async Task<IEnumerable<Order>> GetOrder()
         {
-            return _context.Order;
+            return await DAL.GetOrderList();
         }
 
         // GET: api/Orders/5
+        //id is customer Id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrder([FromRoute] int id)
         {
@@ -37,91 +40,28 @@ namespace SevensPizzaAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var order = await _context.Order.FindAsync(id);
-
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(order);
-        }
-
-        // PUT: api/Orders/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder([FromRoute] int id, [FromBody] Order order)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != order.OrderID)
+            //check if customer Id exist
+            var cust = DAL.GetCustomer(id);
+            if (cust == null)
             {
                 return BadRequest();
             }
-
-            _context.Entry(order).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Orders
-        [HttpPost]
-        public async Task<IActionResult> PostOrder([FromBody] Order order)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Order.Add(order);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
-        }
-
-        // DELETE: api/Orders/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrder([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var order = await _context.Order.FindAsync(id);
+            var order = await DAL.GetOrderWithPizza(id);
+            //get the topping
             if (order == null)
             {
-                return NotFound();
-            }
+                //if customer doesn't have order before
+                //or previous one is checkout
+                //create new order
+                order = await DAL.CreateNewOrder(id);
+                order.PizzaList = new List<Pizza>();
 
-            _context.Order.Remove(order);
-            await _context.SaveChangesAsync();
+            }
 
             return Ok(order);
         }
 
-        private bool OrderExists(int id)
-        {
-            return _context.Order.Any(e => e.OrderID == id);
-        }
     }
+
+        
 }

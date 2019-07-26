@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SevensPizzaEntity;
 
 namespace SevensPizzaEntity.Migrations
 {
     [DbContext(typeof(SevensDBContext))]
-    partial class SevensDBContextModelSnapshot : ModelSnapshot
+    [Migration("20190722024332_CustPassField")]
+    partial class CustPassField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,9 +28,6 @@ namespace SevensPizzaEntity.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CardName")
-                        .IsRequired();
-
-                    b.Property<string>("CardNumber")
                         .IsRequired();
 
                     b.Property<int>("CecCode");
@@ -76,10 +75,6 @@ namespace SevensPizzaEntity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CardID");
-
-                    b.Property<bool>("Checkout");
-
                     b.Property<int>("CustID");
 
                     b.Property<bool>("Delivery");
@@ -96,8 +91,6 @@ namespace SevensPizzaEntity.Migrations
                     b.Property<int>("TotalPizza");
 
                     b.HasKey("OrderID");
-
-                    b.HasIndex("CardID");
 
                     b.HasIndex("CustID");
 
@@ -117,9 +110,6 @@ namespace SevensPizzaEntity.Migrations
                         .IsRequired();
 
                     b.Property<int>("OrderID");
-
-                    b.Property<string>("PizzaName")
-                        .IsRequired();
 
                     b.Property<decimal>("Price");
 
@@ -170,10 +160,6 @@ namespace SevensPizzaEntity.Migrations
 
             modelBuilder.Entity("SevensPizzaEntity.Order", b =>
                 {
-                    b.HasOne("SevensPizzaEntity.CreditCard", "Card")
-                        .WithMany()
-                        .HasForeignKey("CardID");
-
                     b.HasOne("SevensPizzaEntity.Customer", "Cust")
                         .WithMany("Orders")
                         .HasForeignKey("CustID")
@@ -183,7 +169,7 @@ namespace SevensPizzaEntity.Migrations
             modelBuilder.Entity("SevensPizzaEntity.Pizza", b =>
                 {
                     b.HasOne("SevensPizzaEntity.Order", "order")
-                        .WithMany("PizzaList")
+                        .WithMany()
                         .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
