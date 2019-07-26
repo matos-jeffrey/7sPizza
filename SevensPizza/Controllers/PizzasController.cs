@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,14 +14,28 @@ namespace SevensPizza.Controllers
 {
     public class PizzasController : Controller
     {
+
+        HttpClient client = new HttpClient();
+
         private PizzaApi _api;
         public PizzasController(PizzaApi api = null)
+
         {
             if (_api == null)
                 _api = new PizzaApi();
             else
                 _api = api;
         }
+
+
+
+        // GET: Pizzas/Create
+        public IActionResult Create()
+        {
+
+            return View();
+        }
+
         /*
          * custom pizza page, fetch list of topping
          */
@@ -82,8 +98,27 @@ namespace SevensPizza.Controllers
             return RedirectToAction("Menu", "Home");
         }
 
+        // POST: Pizzas/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> Create([Bind("PizzaID,PizzaName,Quantity,Size,CrustStyle,Sauce,SauceAmount,CheeseAmount,Price,OrderID,Toppings")] Pizza pizza)
+        {
+            if (ModelState.IsValid)
+            {
+                pizza.OrderID = 0;
+                //client.BaseAddress = new Uri("https://7spizzaapi.azurewebsites.net/");
+                client.BaseAddress = new Uri("http://localhost:64474/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+                //HttpResponseMessage response = await client.PostAsJsonAsync("api/Customers", customer);
+                var response = await client.PostAsync("api/Pizzas", new JsonContent(pizza));
+            }
+            return View();
+        }
         //Post: Pizzas/Update
         public async Task<IActionResult> Update(int oldQuantity, Pizza pizza)
         {
@@ -94,10 +129,9 @@ namespace SevensPizza.Controllers
             {
                 return NotFound();
             }
-
-
-
-            return RedirectToAction("ShoppingCart", "Orders");
+                return RedirectToAction("ShoppingCart", "Orders");
+            
         }
+
     }
 }

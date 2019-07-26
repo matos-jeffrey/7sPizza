@@ -25,27 +25,31 @@
 
 <script>
     $('#Login').click(function (e) {
-        var url = @ViewData["URL"];
         $.ajax({
             contentType: 'application/json',
             type: "GET",
-            url: url,
-            data: JSON.stringify({
-                "Email": Email,
-                "Password": Password,
-            }),
+            url: "@ViewData["URL"]/"+document.getElementById("Email").value+"/"+document.getElementById("Password").value,
+            //data: //JSON.stringify({
+                //"Email": document.getElementById("Email").value,
+                //"Password": document.getElementById("Password").value,
+            //}),
             success: function (data, textStatus, jqXHR) {
+                alert(jqXHR.responseText);
                 $("#ResponseCheck").val(jqXHR.responseText);
+                console.log(jqXHR.responseText)
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                $("#ResponseCheck").val(jqXHR.statusText);
+            alert(jqXHR.statusText);
+            $("#ResponseCheck").val(jqXHR.statusText);
+                console.log(jqXHR.statusText)
             }
         });
+
     });
 </script>
 
 <span id="ResponseCheck"></span>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} 
 }

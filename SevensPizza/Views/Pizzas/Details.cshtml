@@ -1,0 +1,78 @@
+﻿@model SevensPizzaEntity.Pizza
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pizza</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PizzaName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PizzaName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Size)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Size)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CrustStyle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CrustStyle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sauce)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sauce)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SauceAmount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SauceAmount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CheeseAmount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CheeseAmount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.order)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.order.PaymentType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Toppings)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Toppings)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PizzaID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

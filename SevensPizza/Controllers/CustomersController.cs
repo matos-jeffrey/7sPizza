@@ -32,7 +32,8 @@ namespace SevensPizza.Controllers
 
         public IActionResult Login()
         {
-            ViewData["URL"] = "https://7spizzaapi.azurewebsites.net/";
+            ViewData["URL"] = "http://localhost:64474/api/Customers";
+            //ViewData["URL"] = "https://7spizzaapi.azurewebsites.net/api/Customers/";
             return View();
         }
 
