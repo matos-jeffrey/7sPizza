@@ -53,7 +53,7 @@ namespace SevensPizza.Controllers
                 //separate the string to list
                 var topping = pizza.Toppings.Split(",").ToList();
                 //change isSelected for selected topping
-                if (topping.Count > 1)
+                if (topping[0] != "")
                 {
                     //allow for pizza with topping
                     foreach (var item in topping)

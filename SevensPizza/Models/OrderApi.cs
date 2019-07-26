@@ -45,8 +45,8 @@ namespace SevensPizza.Models
                     //if yes, set card to null
                     //otherwise will get 400 bad request
                     order.Card = null;
-                var message = JsonConvert.SerializeObject(order);
-                var context = new StringContent(message, UnicodeEncoding.UTF8, "application/json");
+                //var message = JsonConvert.SerializeObject(order);
+                //var context = new StringContent(message, UnicodeEncoding.UTF8, "application/json");
                 // var res = await client.PutAsync(apiUrl, new StringContent(JsonConvert.SerializeObject(order), UnicodeEncoding.UTF8, "application/json"));
                 var res = await client.PutAsJsonAsync(apiUrl, order);
                 //var res = await client.PutAsync(apiUrl, context);

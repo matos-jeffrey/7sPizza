@@ -54,7 +54,7 @@ namespace SevensPizza.Controllers
             var custId = 1;
             await _api.Checkout(custId,order);
 
-            return View(order);
+            return RedirectToAction("Menu", "Home");
         }
 
 

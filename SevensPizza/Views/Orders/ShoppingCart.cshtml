@@ -162,4 +162,4 @@
 
 </table>
 
-<button type="button" class="btn btn-default"><a asp-action="Checkout" asp-controller="Orders">Checkout</a></button>
+<button type="button" class="btn btn-default" disabled="@((Model.OrderDetail.PizzaList.Count>0)?false : true)"><a asp-action="Checkout" asp-controller="Orders">Checkout</a></button>
