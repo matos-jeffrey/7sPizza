@@ -57,6 +57,7 @@ namespace SevensPizza.Models
                 client.BaseAddress = new Uri(_url);
                 //1 is customer id
                 var apiUrl = "api/Pizzas/"+custId;
+                var message = JsonConvert.SerializeObject(pizza);
                 var res = await client.PostAsJsonAsync(apiUrl, pizza);
                 return true;
             }

@@ -38,26 +38,24 @@ namespace SevensPizza.Controllers
 
         public async Task<IActionResult> Checkout(int? id)
         {
+            //hard code the customer id
+            var custId = 1;
 
-            Order order = new Order()
-            {
-                TotalPizza = 2,
-                Price = 500
-            };
-
+            var order = await _api.GetOrder(custId);
             return View(order);
         }
 
-/*        [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Checkout(Order order)
+        public async Task<IActionResult> Checkout(Order order)
         {
 
-            var date = order.Card.DOE;
-          
+            //hard code customer id
+            var custId = 1;
+            await _api.Checkout(custId,order);
 
             return View(order);
-        }*/
+        }
 
 
     }

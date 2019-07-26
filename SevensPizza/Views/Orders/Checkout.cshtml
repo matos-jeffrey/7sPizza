@@ -10,7 +10,7 @@
         console.log(e.target.id);
         var name = event.target.id;
         var length;
-        if (name == "Card_CardID")
+        if (name == "Card_CardNumber")
             length = 15;
         else if (name == "Card_CecCode")
             length = 2;
@@ -55,6 +55,7 @@
             <input asp-for="OrderID" type="hidden" />
             <input asp-for="TotalPizza" type="hidden" />
             <input asp-for="Price" type="hidden" />
+            <input asp-for="CustID" type="hidden" />
             <table>
                 <tr>
                     <td class="tableHead">Total Amount</td>
@@ -74,27 +75,32 @@
                 <div class="border">
                     <label asp-for="DeliveryAddress" class="control-label"></label> <br />
                     <input asp-for="DeliveryAddress" id="addressInput" /><br />
-
+                    <span asp-validation-for="DeliveryAddress" class="text-danger"></span>
                 </div>
             </div>
             <label asp-for="PaymentType" class="control-label"></label> <br />
             <div class="choice">
                 <input type="radio" asp-for="PaymentType" id="false" value="Cash" /><label class="option">Cash</label>
                 <input type="radio" asp-for="PaymentType" id="true" value="Credit Card" /><label class="option">Credit Card</label>
+                <span asp-validation-for="PaymentType" class="text-danger"></span>
                 <div class="border">
                     <img src="~/images/creditCard.png" id="creditCard" alt="Credit Card type" /><br />
-                    <label asp-for="Card.CardID" class="control-label"></label> <br />
-                    <input asp-for="Card.CardID" onKeypress="CardNum(event)" /><br />
+                    <label asp-for="Card.CardNumber" class="control-label"></label> <br />
+                    <input asp-for="Card.CardNumber" onKeypress="CardNum(event)" /><br />
                     <label asp-for="Card.CardName" class="control-label"></label> <br />
                     <input asp-for="Card.CardName" /><br />
                     <label asp-for="Card.CecCode" class="control-label"></label> <br />
                     <input asp-for="Card.CecCode" onKeypress="CardNum(event)" /><br />
                     <label asp-for="Card.DOE" class="control-label"></label> <br />
-                    <input asp-for="Card.DOE"  onkeydown="expired(event)"placeholder="MM/YY" /><br />
+                    <input asp-for="Card.DOE" onkeydown="expired(event)" placeholder="MM/YY" /><br />
                 </div>
             </div>
 
-            <span asp-validation-for="PaymentType" class="text-danger"></span>
+
+            <span asp-validation-for="Card.CardNumber" class="text-danger"></span>
+            <span asp-validation-for="Card.CardName" class="text-danger"></span>
+            <span asp-validation-for="Card.CecCode" class="text-danger"></span>
+            <span asp-validation-for="Card.DOE" class="text-danger"></span>
             <button type="submit" class=" btn btn-default">Order</button>
 
         </form>
