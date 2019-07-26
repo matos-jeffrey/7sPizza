@@ -41,7 +41,7 @@ namespace SevensPizzaEntity
         [Required]
         public decimal Price { get; set; }
 
-        public int OrderID { get; set; }
+        public int? OrderID { get; set; }
 
         public Order order { get; set; }
 
