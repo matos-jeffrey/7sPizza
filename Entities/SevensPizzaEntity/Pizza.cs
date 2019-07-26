@@ -52,23 +52,5 @@ namespace SevensPizzaEntity
 
         [NotMapped]
         public List<Topping> Veggies { get; set; }
-
-        public string ToppingList()
-        {
-            StringBuilder str = new StringBuilder();
-            foreach (var item in Meats)
-            {
-                if (item.IsSelected == true)
-                    str.Append(item.Name + ",");
-            }
-            foreach (var item in Veggies)
-            {
-                if (item.IsSelected == true)
-                    str.Append(item.Name + ",");
-            }
-            //save value to Toppings 
-            Toppings = str.ToString().Substring(0, (str.Length > 0) ? str.Length - 1 : 0);
-            return Toppings;
-        }
     }
 }
