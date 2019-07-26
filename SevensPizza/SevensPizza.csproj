@@ -14,4 +14,10 @@
     <ProjectReference Include="..\Entities\SevensPizzaEntity\SevensPizzaEntity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Home\Menu.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -12,7 +12,9 @@ namespace SevensPizza.Models
 {
     public class OrderApi
     {
-        private string _url = "http://localhost:58548/";
+        //private string _url = "http://localhost:58548/";
+        private string _url = "http://localhost:64474/";
+        
 
         public async Task<Order> GetOrder(int id)
         {

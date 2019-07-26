@@ -11,7 +11,8 @@ namespace SevensPizza.Models
 {
     public class PizzaApi
     {
-        private string _url = "http://localhost:58548/";
+        //private string _url = "http://localhost:58548/";
+        private string _url = "http://localhost:64474/";
 
         public async Task<List<Topping>> GetTopping()
         {
