@@ -24,11 +24,7 @@ h1.header, h1 label.control-label {
 label.option {
     font-size: 18px;
     font-weight: 200;
-}
-
-label.control-label {
-    font-size: 10px;
-    font-weight: 600;
+    display: inline;
 }
 
 input.formInput {
@@ -99,5 +95,5 @@ img.topping{
 .formLabel {
     font-size: 20px;
     white-space: nowrap;
-    display: inline;
+    display: inline-block;
 }

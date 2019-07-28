@@ -1,8 +1,12 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One');
+
+* {color: #FFFFFF;}
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: #555555;
 }
 
 /* Wrapping element */
@@ -33,5 +37,34 @@ body {
     /* Hide captions */
     .carousel-caption {
         display: none;
+    }
+}
+
+.pageheader {
+    font-size: 40px;
+    font-family: Fjalla One;
+    border-color: blue;
+    border: 80px solid blue;
+    /*text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;*/
+    color: Red;
+    margin-top: 30px;
+}
+
+.glow {
+    font-size: 40px;
+    color: #fff;
+    font-family: Fjalla One;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+    from {
+        text-shadow: 0 0 10px #999999, 0 0 20px #999999, 0 0 30px #999999, 0 0 40px #999999, 0 0 50px #999999;
+    }
+
+    to {
+        text-shadow: 0 0 10px black, 0 0 20px black, 0 0 30px black, 0 0 40px black, 0 0 50px black;
     }
 }

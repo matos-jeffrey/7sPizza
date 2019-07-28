@@ -1,7 +1,7 @@
 ﻿@model SevensPizzaEntity.Pizza
 
 @{
-    ViewData["Title"] = "Custom Pizza";
+    ViewData["Title"] = "Build Your Pizza!";
 }
 
 <div class="row">
@@ -15,15 +15,15 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <!-- First page-->
             <div class="form-group border open ">
-                <h1 class="header">Size and Curst</h1>
+                <h2 class="header">Select Your Size and Crust</h2>
                 <hr />
                 <!-- amount of pizza-->
-                <label asp-for="Quantity" class="control-label"></label> <br />
+                <label asp-for="Quantity" class="formLabel"></label> <br />
                 <input asp-for="Quantity" min="1" max="50" class="formInput" onkeypress="IntOnly(event)" /> <br />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
 
                 <!-- the size of pizza-->
-                <label asp-for="Size" class="control-label"></label> <br />
+                <label asp-for="Size" class="formLabel"></label> <br />
                 <input type="radio" asp-for="Size" value="Small" /><label class="option">Small</label>
                 <input type="radio" asp-for="Size" value="Medium" /><label class="option">Medium</label>
                 <input type="radio" asp-for="Size" value="Large" /><label class="option">Large</label>
@@ -31,13 +31,13 @@
                 <span asp-validation-for="Size" class="text-danger"></span>
 
                 <!-- the style of pizza-->
-                <label asp-for="CrustStyle" class="control-label"></label> <br />
+                <label asp-for="CrustStyle" class="formLabel"></label> <br />
                 <input type="radio" asp-for="CrustStyle" value="Original" /><label class="option">Original</label>
                 <input type="radio" asp-for="CrustStyle" value="Thin" /><label class="option">Thin</label> <br />
                 <span asp-validation-for="CrustStyle" class="text-danger"></span>
 
                 <!-- the Sauce of pizza-->
-                <label asp-for="Sauce" class="control-label"></label> <br />
+                <label asp-for="Sauce" class="formLabel"></label> <br />
                 <input type="radio" asp-for="Sauce" value="Tomato" /><label class="option">Tomato</label>
                 <input type="radio" asp-for="Sauce" value="BBQ" /><label class="option">BBQ</label>
                 <input type="radio" asp-for="Sauce" value="Alfrodo Sauce" /><label class="option">Alfrodo Sauce</label>
@@ -45,8 +45,8 @@
                 <input type="radio" asp-for="Sauce" value="Bufflo" /><label class="option">Bufflo</label> <br />
                 <span asp-validation-for="Size" class="text-danger"></span>
 
-                <!-- the Amount of saurce-->
-                <label asp-for="SauceAmount" class="control-label"></label> <br />
+                <!-- the Amount of sauce-->
+                <label asp-for="SauceAmount" class="formLabel"></label> <br />
                 <input type="radio" asp-for="SauceAmount" value="Normal" /><label class="option">Normal</label>
                 <input type="radio" asp-for="SauceAmount" value="Light" /><label class="option">Light</label>
                 <input type="radio" asp-for="SauceAmount" value="Extra" /><label class="option">Extra</label>
@@ -54,7 +54,7 @@
                 <span asp-validation-for="SauceAmount" class="text-danger"></span>
 
                 <!-- the Amount of cheese-->
-                <label asp-for="CheeseAmount" class="control-label"></label> <br />
+                <label asp-for="CheeseAmount" class="formLabel"></label> <br />
                 <input type="radio" asp-for="CheeseAmount" value="Normal" /><label class="option">Normal</label>
                 <input type="radio" asp-for="CheeseAmount" value="Light" /><label class="option">Light</label>
                 <input type="radio" asp-for="CheeseAmount" value="None" /><label class="option">None</label> <br />
@@ -65,7 +65,8 @@
             <!-- Second Page-->
             <div class="form-group border">
 
-                <h1 class="header"><label asp-for="Meats" class="control-label"></label></h1>
+                <h2 class="header">Select Your Toppings</h2>
+                <hr />
                 @for (int i = 0; i < Model.Meats.Count; i++)
                 {
                     <input type="checkbox" asp-for="@Model.Meats[i].IsSelected" />
@@ -91,7 +92,8 @@
             <!-- Third Page-->
             <div class="form-group border">
 
-                <h1 class="header"><label asp-for="Veggies" class="control-label"></label></h1>
+                <h2 class="header">Select Your Toppings</h2>
+                <hr />
                 @for (int i = 0; i < Model.Veggies.Count; i++)
                 {
                     <input type="checkbox" asp-for="@Model.Veggies[i].IsSelected" />
