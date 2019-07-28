@@ -71,7 +71,7 @@ namespace SevensPizzaAPI.DAL
         }
         public async Task<Order> GetOrderWithPizza(int id)
         {
-            return await _context.Order.Include("PizzaList").Where(x => x.OrderID == id).FirstOrDefaultAsync();
+            return await _context.Order.Include("PizzaList").Where(x => x.CustID == id && x.Checkout ==false).FirstOrDefaultAsync();
         }
         public async Task<Order> CreateNewOrder(int id)
         {
@@ -102,6 +102,26 @@ namespace SevensPizzaAPI.DAL
         {
             return  _context.Topping.ToList();
         }
+        #endregion
+
+        #region credit card
+        public async Task<int> AddCreditCard(int custId,CreditCard card)
+        {
+            //first check if the card already exist
+            var exist = _context.CreditCard.Where(x => x.CardNumber == card.CardNumber && x.CecCode == card.CecCode && x.CustID == custId).FirstOrDefault();
+            if(exist == null)
+            {
+                card.CustID = custId;
+                //add to database
+                _context.CreditCard.Add(card);
+                await _context.SaveChangesAsync();
+                return card.CardID;
+            }
+            
+            return exist.CardID;
+        }
+
+
         #endregion
     }
 }
