@@ -50,6 +50,10 @@ body {
     margin-top: 30px;
 }
 
+.mainTitle {
+    font-size: 65px;
+}
+
 .glow {
     font-size: 40px;
     color: #fff;

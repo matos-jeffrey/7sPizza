@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action=@((ViewBag.type == "create")?"Custom":"Update")>
+        <form asp-action=@((ViewBag.type =="create" )?"Custom":"Update")>
             <input type="hidden" name="oldQuantity" value="@Model.Quantity" />
             <input asp-for="PizzaID" type="hidden" />
             <input asp-for="OrderID" type="hidden" />
@@ -19,46 +19,73 @@
                 <hr />
                 <!-- amount of pizza-->
                 <label asp-for="Quantity" class="formLabel"></label> <br />
-                <input asp-for="Quantity" min="1" max="50" class="formInput" onkeypress="IntOnly(event)" /> <br />
+                <input asp-for="Quantity" min="1" max="50" class="formInput" onkeypress="IntOnly(event)" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
 
                 <!-- the size of pizza-->
-                <label asp-for="Size" class="formLabel"></label> <br />
-                <input type="radio" asp-for="Size" value="Small" /><label class="option">Small</label>
-                <input type="radio" asp-for="Size" value="Medium" /><label class="option">Medium</label>
-                <input type="radio" asp-for="Size" value="Large" /><label class="option">Large</label>
-                <input type="radio" asp-for="Size" value="Extra Large" /><label class="option">Extra Large</label> <br />
-                <span asp-validation-for="Size" class="text-danger"></span>
+                <label asp-for="Size" class="formLabel"></label>
+                <!--<input type="radio" asp-for="Size" value="Small" /><label class="option">Small</label>
+    <input type="radio" asp-for="Size" value="Medium" /><label class="option">Medium</label>
+    <input type="radio" asp-for="Size" value="Large" /><label class="option">Large</label>
+    <input type="radio" asp-for="Size" value="Extra Large" /><label class="option">Extra Large</label> <br />
+    <span asp-validation-for="Size" class="text-danger"></span> -->
+                <select asp-for="Size">
+                    <option asp-for="Size" value="Small">Small</option>
+                    <option asp-for="Size" value="Medium">Medium</option>
+                    <option asp-for="Size" value="Large">Large</option>
+                    <option asp-for="Size" value="Extra Large">Extra Large</option>
+                </select>
+                <span asp-validation-for="Size" class="text-danger"></span> <br />
 
                 <!-- the style of pizza-->
                 <label asp-for="CrustStyle" class="formLabel"></label> <br />
                 <input type="radio" asp-for="CrustStyle" value="Original" /><label class="option">Original</label>
-                <input type="radio" asp-for="CrustStyle" value="Thin" /><label class="option">Thin</label> <br />
-                <span asp-validation-for="CrustStyle" class="text-danger"></span>
+                <img src="~/images/original-crust.jpg" alt="Original crust" height="200" width="200" />
+                <input type="radio" asp-for="CrustStyle" value="Thin" /><label class="option">Thin</label>
+                <img src="~/images/thin-crust.jpg" alt="thin crust" height="200" width="200" />
+                <span asp-validation-for="CrustStyle" class="text-danger"></span><br />
 
                 <!-- the Sauce of pizza-->
                 <label asp-for="Sauce" class="formLabel"></label> <br />
                 <input type="radio" asp-for="Sauce" value="Tomato" /><label class="option">Tomato</label>
+                <img src="~/images/TomatoSauce.jpg" alt="TomatoSauce" height="200" width="200" />
                 <input type="radio" asp-for="Sauce" value="BBQ" /><label class="option">BBQ</label>
+                <img src="~/images/BBQ.jpg" alt="BBQ" height="200" width="200" />
                 <input type="radio" asp-for="Sauce" value="Alfrodo Sauce" /><label class="option">Alfrodo Sauce</label>
+                <img src="~/images/AlfrodoSauce.jpg" alt="AlfrodoSauce" height="200" width="200" /><br />
                 <input type="radio" asp-for="Sauce" value="Ranch" /><label class="option">Ranch</label>
-                <input type="radio" asp-for="Sauce" value="Bufflo" /><label class="option">Bufflo</label> <br />
-                <span asp-validation-for="Size" class="text-danger"></span>
+                <img src="~/images/Ranch.jpg" alt="Ranch" height="200" width="200" />
+                <input type="radio" asp-for="Sauce" value="Bufflo" /><label class="option">Bufflo</label>
+                <img src="~/images/Bufflo.jpg" alt="Bufflo" height="200" width="200" />
+                <span asp-validation-for="Size" class="text-danger"></span><br />
 
-                <!-- the Amount of sauce-->
+                <!-- the Amount of saurce-->
                 <label asp-for="SauceAmount" class="formLabel"></label> <br />
-                <input type="radio" asp-for="SauceAmount" value="Normal" /><label class="option">Normal</label>
-                <input type="radio" asp-for="SauceAmount" value="Light" /><label class="option">Light</label>
-                <input type="radio" asp-for="SauceAmount" value="Extra" /><label class="option">Extra</label>
-                <input type="radio" asp-for="SauceAmount" value="None" /><label class="option">None</label> <br />
-                <span asp-validation-for="SauceAmount" class="text-danger"></span>
+                <!--<input type="radio" asp-for="SauceAmount" value="Normal" /><label class="option">Normal</label>
+    <input type="radio" asp-for="SauceAmount" value="Light" /><label class="option">Light</label>
+    <input type="radio" asp-for="SauceAmount" value="Extra" /><label class="option">Extra</label>
+    <input type="radio" asp-for="SauceAmount" value="None" /><label class="option">None</label> <br />-->
+                <select asp-for="SauceAmount">
+                    <option asp-for="SauceAmount" value="Normal">Normal</option>
+                    <option asp-for="SauceAmount" value="Light">Light</option>
+                    <option asp-for="SauceAmount" value="Extra">Extra</option>
+                    <option asp-for="SauceAmount" value="None">None</option>
+                </select>
+
+                <span asp-validation-for="SauceAmount" class="text-danger"></span></br>
 
                 <!-- the Amount of cheese-->
                 <label asp-for="CheeseAmount" class="formLabel"></label> <br />
-                <input type="radio" asp-for="CheeseAmount" value="Normal" /><label class="option">Normal</label>
-                <input type="radio" asp-for="CheeseAmount" value="Light" /><label class="option">Light</label>
-                <input type="radio" asp-for="CheeseAmount" value="None" /><label class="option">None</label> <br />
-                <span asp-validation-for="CheeseAmount" class="text-danger"></span>
+                <!--<input type="radio" asp-for="CheeseAmount" value="Normal" /><label class="option">Normal</label>
+    <input type="radio" asp-for="CheeseAmount" value="Light" /><label class="option">Light</label>
+    <input type="radio" asp-for="CheeseAmount" value="None" /><label class="option">None</label> <br />-->
+                <select asp-for="CheeseAmount">
+                    <option asp-for="CheesAmount" value="Normal">Normal</option>
+                    <option asp-for="CheesAmount" value="Light">Light</option>
+                    <option asp-for="CheesAmount" value="None">None</option>
+                </select>
+                <span asp-validation-for="CheeseAmount" class="text-danger"></span><br />
+
                 <button type="button" class="next btn btn-default">Next</button>
             </div>
 
