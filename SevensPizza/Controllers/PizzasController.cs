@@ -73,7 +73,7 @@ namespace SevensPizza.Controllers
 
             //separate to two list
             var meatList = toppingList.Where(x => x.ToppingType == "Meat").ToList();
-            var veggiesList = toppingList.Where(x => x.ToppingType == "Veggies").ToList();
+            var veggiesList = toppingList.Where(x => x.ToppingType == "Veggie").ToList();
 
             //add to the pizaa
             pizza.Meats = meatList;

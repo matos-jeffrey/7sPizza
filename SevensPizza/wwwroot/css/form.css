@@ -5,11 +5,13 @@
 
 .open {
     display: block;
-    width: 1500px;
+    width: 320%;
 }
 
 input[type="radio"] {
     margin: 0 10px 0 10px;
+    height: 16px;
+    width: 16px;
 }
 
 button.topping {
@@ -37,36 +39,28 @@ input.formInput {
     font-size: 25px;
 }
 
-input[type="radio"] {
-    height: 20px;
-    width: 20px;
-}
-
 input[type="checkbox"] {
-    height: 30px;
-    width: 30px;
-    position: relative;
+    height: 15px;
+    width: 15px;
+    /*position: relative;*/
     top: -50px;
 }
 
 div.topping {
-    width: 250px;
-    height: 133px;
-    display: inline-block;
-    margin-right: 50px;
+    display:inline-block;
+    margin-right: 20px;
     margin-top: 20px;
 }
 
-<<<<<<< HEAD
 /*
 img.topping{
     height: 100%;
     width: 100%;
 }*/
 
-.topping {
+/*.topping {
     width: 300px;
-}
+}*/
 
 .shoppingAmount {
     width: 50px;
@@ -98,4 +92,13 @@ img.topping{
     font-size: 20px;
     white-space: nowrap;
     display: inline-block;
+}
+
+.toppingList {
+    list-style-type: none;
+    display: inline-block;
+}
+
+.product {
+    font-size: 18px;
 }

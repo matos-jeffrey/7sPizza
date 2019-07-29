@@ -4,17 +4,17 @@
     $("button.next").on("click", function () {
 
         //hidden the current section
-        $(this).parent().removeClass("open");
+        $(this).parent().parent().removeClass("open");
         //show the next one section
-        $(this).parent().next().addClass("open");
+        $(this).parent().parent().next().addClass("open");
     })
 
     //for previous section
-    $("button.preivous").on("click", function () {
+    $("button.previous").on("click", function () {
         //hidden the current section
-        $(this).parent().removeClass("open");
+        $(this).parent().parent().removeClass("open");
         //show the previous one section
-        $(this).parent().prev().addClass("open");
+        $(this).parent().parent().prev().addClass("open");
     })
     //hide or open for delivery address and credit card information
         $("div.choice").on("click", function (e) {
