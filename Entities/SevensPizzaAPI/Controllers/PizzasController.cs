@@ -65,7 +65,7 @@ namespace SevensPizzaAPI.Controllers
         public async Task<IActionResult> PostPizza([FromRoute] int id, [FromBody] Pizza pizza)
         {
             //check if customer exist
-            var cust = DAL.GetCustomer(id);
+            var cust =await DAL.GetCustomer(id);
             if (cust == null)
             {
                 return BadRequest();
@@ -86,7 +86,7 @@ namespace SevensPizzaAPI.Controllers
             //update information 
             order.TotalPizza += pizza.Quantity;
             order.Price += pizza.Price;
-            pizza = await DAL.CreateNewPizza(pizza);
+            await DAL.CreateNewPizza(pizza);
             await DAL.UpdateOrder(order);
             return Ok();
         }
@@ -100,7 +100,7 @@ namespace SevensPizzaAPI.Controllers
         public async Task<IActionResult> PutPizza([FromRoute] int quantity, [FromBody] Pizza pizza)
         {
             //get the corresponing order
-            var order = await DAL.GetOrder(pizza.OrderID);
+            var order = await DAL.GetOrder((int)pizza.OrderID);
             if (order == null)
             {
                 return BadRequest();
@@ -239,7 +239,7 @@ namespace SevensPizzaAPI.Controllers
             var toppingList = DAL.GetToppings();
             var topping = pizza.Toppings.Split(",").ToList();
             //change isSelected for selected topping
-            if (topping.Count > 1)
+            if (topping[0] !="")
             {
                 //allow for pizza with topping
                 foreach (var item in topping)

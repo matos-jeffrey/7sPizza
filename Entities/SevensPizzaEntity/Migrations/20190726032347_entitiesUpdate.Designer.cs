@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SevensPizzaEntity;
 
 namespace SevensPizzaEntity.Migrations
 {
     [DbContext(typeof(SevensDBContext))]
-    partial class SevensDBContextModelSnapshot : ModelSnapshot
+    [Migration("20190726032347_entitiesUpdate")]
+    partial class entitiesUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -41,7 +41,7 @@ namespace SevensPizzaAPI.Controllers
                 return BadRequest(ModelState);
             }
             //check if customer Id exist
-            var cust = DAL.GetCustomer(id);
+            var cust =await DAL.GetCustomer(id);
             if (cust == null)
             {
                 return BadRequest();
@@ -59,6 +59,24 @@ namespace SevensPizzaAPI.Controllers
             }
 
             return Ok(order);
+        }
+
+
+        //Put:api/Orders
+        //id is customer id
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Checkout([FromRoute] int id,[FromBody] Order order)
+        {
+            order.OrderTime = DateTime.Now;
+            order.Checkout = true;
+            if(order.Card != null)
+            {
+                //add to credit card table
+                order.CardID=await DAL.AddCreditCard(id,order.Card);
+            }
+            //then update the order
+            await DAL.UpdateOrder(order);
+            return Ok();
         }
 
     }
