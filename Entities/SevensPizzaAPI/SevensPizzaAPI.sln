@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SevensPizzaAPI", "SevensPiz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SevensPizzaEntity", "..\SevensPizzaEntity\SevensPizzaEntity.csproj", "{9488735A-30DD-4D35-804E-F10F3A224C8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIUnitTest", "..\APIUnitTest\APIUnitTest.csproj", "{16164EF6-DC83-423B-ADB6-117905F8C178}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9488735A-30DD-4D35-804E-F10F3A224C8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9488735A-30DD-4D35-804E-F10F3A224C8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9488735A-30DD-4D35-804E-F10F3A224C8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16164EF6-DC83-423B-ADB6-117905F8C178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16164EF6-DC83-423B-ADB6-117905F8C178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16164EF6-DC83-423B-ADB6-117905F8C178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16164EF6-DC83-423B-ADB6-117905F8C178}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
