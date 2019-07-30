@@ -64,10 +64,11 @@ img.topping{
 
 .shoppingAmount {
     width: 50px;
+    font-size: 20px;
 }
 
 .total {
-    font-size: 30px;
+    font-size: 25px;
 }
 
 #addressInput {
@@ -101,4 +102,8 @@ img.topping{
 
 .product {
     font-size: 18px;
+}
+
+.shoppingText {
+    font-size: 16px;
 }
