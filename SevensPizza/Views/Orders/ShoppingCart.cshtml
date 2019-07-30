@@ -96,14 +96,18 @@
     <thead>
         <tr>
             <th>
-                <h3>
-                    @Html.DisplayNameFor(model => model.PizzaProperty.Quantity)
-                </h3>
+                <center>
+                    <h3>
+                        @Html.DisplayNameFor(model => model.PizzaProperty.Quantity)
+                    </h3>
+                </center>
             </th>
             <th>
-                <h3>
-                    @Html.DisplayNameFor(model => model.PizzaProperty.Price)
-                </h3>
+                <center>
+                    <h3>
+                        @Html.DisplayNameFor(model => model.PizzaProperty.Price)
+                    </h3>
+                </center>
             </th>
             <th>
                 <h3>
@@ -122,13 +126,19 @@
         @foreach (var item in Model.OrderDetail.PizzaList)
         {
             <tr id="pizza@(item.PizzaID)">
+
                 <input asp-for="@item.PizzaID" id="item@(item.PizzaID)" type="hidden" />
                 <td>
-                    <input asp-for="@item.Quantity" min="1" max="50" id="@(item.PizzaID)" class="shoppingAmount makeTextBlack" onchange="QuantityChange(this)" onkeypress="IntOnly(event)" />
+                    <center>
+                        <input asp-for="@item.Quantity" min="1" max="50" id="@(item.PizzaID)" class="shoppingAmount makeTextBlack" onchange="QuantityChange(this)" onkeypress="IntOnly(event)" />
+                    </center>
                 </td>
                 <td id="price@(item.PizzaID)" class="shoppingText">
-                    @Html.DisplayFor(modelItem => item.Price)
+                    <center>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </center>
                 </td>
+
                 <td>
                     <table class="shoppingText">
                         <tr>
@@ -165,21 +175,25 @@
             </tr>
         }
         <tr>
-            <td class="total" id="totalAmount">
+            <td class="total">
                 <center>
-                    Total Pizzas:
-                    @Html.DisplayFor(modelItem => modelItem.OrderDetail.TotalPizza)
+                    Total Pizzas: <br />
+                    <span id="totalAmount">@Html.DisplayFor(modelItem => modelItem.OrderDetail.TotalPizza)</span>
                 </center>
             </td>
-            <td class="total" id="totalPrice">
+            <td class="total">
                 <center>
-                    Total Price: $
-                    @Html.DisplayFor(modelItem => modelItem.OrderDetail.Price)
+                    Total Price: <br />$
+                    <span id="totalPrice">@Html.DisplayFor(modelItem => modelItem.OrderDetail.Price)</span>
                 </center>
             </td>
             <td colspan="2">
                 <center>
-                    <button type="button" class="btn btn-default" disabled="@((Model.OrderDetail.PizzaList.Count>0)?false : true)"><a asp-action="Checkout" asp-controller="Orders" style="color:#000">Checkout</a></button>
+                    <a asp-action="Checkout" asp-controller="Orders" style="color:#000">
+                        <button type="button" class="btn btn-default" style="vertical-align: middle; margin-top: 16px" disabled="@((Model.OrderDetail.PizzaList.Count>0)?false : true)">
+                            Checkout
+                        </button>
+                    </a>
                 </center>
             </td>
         </tr>
