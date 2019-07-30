@@ -22,7 +22,7 @@
         //get the total amount for change new value
         var totalAmount = "#totalAmount";
         //ajax call
-        var url = "http://localhost:58548/api/Pizzas/Change";
+        var url = "https://7spizzaapi.azurewebsites.net/api/Pizzas/Change";
 
         /*PUT*/
         $.ajax({
@@ -58,10 +58,18 @@
 
         //get the pizza pid
         var id = parseInt(event.target.id);
+
+        var quantity = $("#" + id).val();
+        var price = parseFloat($("#price" + id).html());
+        var totalQuantity = parseInt($("#totalAmount").html());
+        var totalPrice = parseFloat($("#totalPrice").html());
+        totalQuantity -= quantity;
+        totalPrice -= price;
+
         //get the pizza element and hidden it
         var pizza = "#pizza" + id;
         //ajax call
-        var url = "http://localhost:58548/api/Pizzas/" + id;
+        var url = "https://7spizzaapi.azurewebsites.net/api/Pizzas/" + id;
         /*put*/
         $.ajax({
             url: url,
@@ -71,6 +79,9 @@
                   },*/
             success: function () {
                 $(pizza).remove();
+
+                $("#totalAmount").html(totalQuantity);
+                $("#totalPrice").html(totalPrice);
 
             },
             error: function (xhr) {

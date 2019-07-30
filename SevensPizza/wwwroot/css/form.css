@@ -5,7 +5,6 @@
 
 .open {
     display: block;
-    width: 320%;
 }
 
 input[type="radio"] {
@@ -72,7 +71,8 @@ img.topping{
 }
 
 #addressInput {
-    width: 1000px;
+    width: 30%;
+    color: black;
 }
 
 #creditCard {
@@ -80,13 +80,12 @@ img.topping{
 }
 
 .tableHead {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 500;
 }
 
 .tableContext {
-    font-size: 15px;
-    padding-left: 10px;
+   
 }
 
 .formLabel {
