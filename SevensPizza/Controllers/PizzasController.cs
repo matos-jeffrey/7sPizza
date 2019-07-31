@@ -62,8 +62,14 @@ namespace SevensPizza.Controllers
                         result.IsSelected = true;
                     }
                 }
-
-                ViewData["type"] = "edit";
+                if (id >= 32 && id <= 38)
+                {
+                    ViewData["type"] = "create";
+                }
+                else
+                {
+                    ViewData["type"] = "edit";
+                }
             }
             else
             {
@@ -87,6 +93,8 @@ namespace SevensPizza.Controllers
         // Post: Pizzas/Custom
         public async Task<IActionResult> Custom(Pizza pizza)
         {
+            pizza.OrderID = null;
+            pizza.PizzaID = 0;
             //handcode customer id =1;
             var custId = 1;
             var success = await _api.PostPizza(custId,pizza);
