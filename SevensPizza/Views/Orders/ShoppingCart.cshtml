@@ -133,9 +133,9 @@
                         <input asp-for="@item.Quantity" min="1" max="50" id="@(item.PizzaID)" class="shoppingAmount makeTextBlack" onchange="QuantityChange(this)" onkeypress="IntOnly(event)" />
                     </center>
                 </td>
-                <td id="price@(item.PizzaID)" class="shoppingText">
+                <td class="shoppingText">
                     <center>
-                        @Html.DisplayFor(modelItem => item.Price)
+                        <span id="price@(item.PizzaID)">@Html.DisplayFor(modelItem => item.Price)</span>
                     </center>
                 </td>
 
